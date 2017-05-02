@@ -27,24 +27,6 @@ namespace WebAPI.Dashboard.Areas.admin.Controllers
                     });
             }
 
-            var stats = Session.Query<StatsPerService.Stats, StatsPerService>()
-                               .Select(x => x).ToList();
-
-            var statsModel = Mapper.Map<List<StatsPerService.Stats>, List<ServiceStatsViewModel>>(stats);
-
-            var then = DateTime.Parse("2/24/2013").Ticks;
-            var lineChart = Session.Query<RequestsPerDay.Stats, RequestsPerDay>()
-                                   .Where(x => x.Date > then)
-                                   .OrderByDescending(x=>x.Date)
-                                   .ToList();
-
-            var line = TransformToD3JsLine(lineChart);
-
-            var model = new
-                {
-                    stats = statsModel,
-                    lineChart = line
-                };
 
             return View("Index");
         }
